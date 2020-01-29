@@ -558,15 +558,26 @@ export default {
       )
       return returnString
     },
-    formatTime: function (startTime) {
-      let returnString = this.makeDT(startTime).toLocaleString(DateTime.TIME_SIMPLE)
+    formatTime: function (startTime, endTime) {
+      return "uhu";
+      let returnStringStart = this.makeDT(startTime).toLocaleString(DateTime.TIME_SIMPLE)
       // simplify if AM / PM present
-      if (returnString.includes('M')) {
-        returnString = returnString.replace(':00', '') // remove minutes if = ':00'
+      if (returnStringStart.includes('M')) {
+        const starting = returnStringStart.replace(':00', '') // remove minutes if = ':00'
+          .replace(' AM', 'am')
+          .replace(' PM', 'pm')
+
+      if (endTime == null) return returnStringStart;
+        
+      let returnStringEnd = this.makeDT(endTime).toLocaleString(DateTime.TIME_SIMPLE)
+      // simplify if AM / PM present
+      if (returnStringEnd.includes('M')) {
+        const starting = returnStringEnd.replace(':00', '') // remove minutes if = ':00'
           .replace(' AM', 'am')
           .replace(' PM', 'pm')
       }
-      return returnString
+        
+      return returnStringStart + "-" + returnStringEnd 
     },
     getEventDuration: function (startTime, endTime) {
       return Math.floor(
